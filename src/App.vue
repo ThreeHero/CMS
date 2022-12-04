@@ -1,9 +1,13 @@
 <template>
-  <div>
+  <div class="app">
     <router-view />
   </div>
 </template>
 
 <script lang="ts" setup name="App"></script>
 
-<style lang="less"></style>
+<style lang="less">
+.app {
+  height: 100%;
+}
+</style>
