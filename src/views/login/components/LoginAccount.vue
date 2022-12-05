@@ -62,9 +62,7 @@ const rules = {
 }
 
 // 记住密码
-const isKeepPassword =
-  ref<boolean>(localCache.getCache('isKeepPassword', false)) ??
-  ref<boolean>(false)
+const isKeepPassword = ref(localCache.getCache('isKeepPassword', false) ?? true)
 const rememberPassword = () => {
   localCache.removeCache('isKeepPassword', false)
   localCache.setCache('isKeepPassword', isKeepPassword.value, false)

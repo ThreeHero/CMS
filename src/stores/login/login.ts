@@ -19,8 +19,8 @@ const useLoginStore = defineStore('login', {
     return {
       // 缓存中读取
       token: localCache.getCache('token') ?? '',
-      userInfo: {},
-      userMenus: []
+      userInfo: localCache.getCache('useInfo') ?? {},
+      userMenus: localCache.getCache('userMenus') ?? []
     }
   },
   getters: {},

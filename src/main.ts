@@ -5,6 +5,7 @@ import ElementPlus from 'element-plus'
 import App from './App.vue'
 
 import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'normalize.css'
 import '@/assets/css/index.less'
 
@@ -17,3 +18,7 @@ app.use(router)
 app.use(stores)
 app.use(ElementPlus)
 app.mount('#app')
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}

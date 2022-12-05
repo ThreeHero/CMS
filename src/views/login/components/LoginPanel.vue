@@ -27,7 +27,6 @@
 </template>
 
 <script lang="ts" setup name="LoginPanel">
-import { User, Cellphone } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import LoginAccount from './LoginAccount.vue'
 import LoginPhone from './LoginPhone.vue'
