@@ -1,8 +1,8 @@
 <template>
   <div class="login-panel">
     <h2 class="login-title">后台管理系统</h2>
-    <el-tabs class="login-tabs" stretch>
-      <el-tab-pane>
+    <el-tabs class="login-tabs" stretch v-model="currentTab">
+      <el-tab-pane name="account">
         <template #label>
           <span class="custom-tabs-label">
             <el-icon class="icon"><User /></el-icon>
@@ -12,7 +12,7 @@
         <!-- 账号登录 -->
         <login-account />
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="phone">
         <template #label>
           <span class="custom-tabs-label">
             <el-icon class="icon"><Cellphone /></el-icon>
@@ -28,8 +28,11 @@
 
 <script lang="ts" setup name="LoginPanel">
 import { User, Cellphone } from '@element-plus/icons-vue'
+import { ref } from 'vue'
 import LoginAccount from './LoginAccount.vue'
 import LoginPhone from './LoginPhone.vue'
+
+const currentTab = ref('account')
 </script>
 
 <style scoped lang="less">

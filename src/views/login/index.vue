@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <!-- <vue-particles
+    <vue-particles
       color="#dedede"
       :particleOpacity="0.7"
       :particlesNumber="80"
@@ -16,7 +16,7 @@
       hoverMode="grab"
       :clickEffect="true"
       clickMode="push"
-    /> -->
+    />
     <div class="login-box">
       <login-panel />
     </div>
@@ -40,11 +40,18 @@ import LoginPanel from './components/LoginPanel.vue'
     transform: translate(-50%, -60%);
     z-index: 9999;
 
-    opacity: 0.5;
+    opacity: 0.4;
 
     width: 450px;
     height: 350px;
     background: #fff;
+
+    transition: opacity 0.5s ease;
+
+    &:hover {
+      opacity: 1;
+      box-shadow: 1px 1px #87ceeb;
+    }
   }
 }
 </style>

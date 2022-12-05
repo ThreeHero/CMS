@@ -1,5 +1,6 @@
 import THRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
+import localCache from '@/utils/cache'
 
 const request = new THRequest({
   baseURL: BASE_URL,
@@ -7,24 +8,20 @@ const request = new THRequest({
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
-      const token = 'xiaoliu'
+      const token = localCache.getCache('token') ?? ''
       if (token) {
         config.headers!.Authorization = `Bearer ${token}`
       }
 
-      console.log('请求成功拦截器')
       return config
     },
     requestInterceptorCatch: (err) => {
-      console.log('请求失败拦截器')
       return err
     },
     responseInterceptor: (config) => {
-      console.log('响应成功拦截器')
       return config
     },
     responseInterceptorCatch: (err) => {
-      console.log('响应失败拦截器')
       return err
     }
   }

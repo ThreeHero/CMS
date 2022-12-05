@@ -23,10 +23,12 @@
     </el-form>
     <div class="account-control">
       <div class="login-remember">
-        <el-checkbox label="记住密码" />
-        <el-link type="primary" :underline="false" v-model="isKeepPassword"
-          >忘记密码</el-link
-        >
+        <el-checkbox
+          label="记住密码"
+          @change="rememberPassword"
+          v-model="isKeepPassword"
+        />
+        <el-link type="primary" :underline="false">忘记密码</el-link>
       </div>
       <el-button class="login-btn" type="primary" @click="handleLogin"
         >Login</el-button
@@ -37,12 +39,13 @@
 
 <script setup lang="ts" name="LoginAccount">
 import type { ElForm } from 'element-plus'
+import useLoginStore from '@/stores/login/login'
 import { reactive, ref } from 'vue'
+import localCache from '@/utils/cache'
 
-const formRef = ref<InstanceType<typeof ElForm>>()
 // 表单绑定
 const account = reactive({
-  name: '',
+  name: localCache.getCache('name') ?? '',
   password: ''
 })
 // 验证规则
@@ -51,22 +54,46 @@ const rules = {
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     {
-      pattern: /^[a-zA-Z]\w{5,17}$/,
-      message: '请以字母开头，长度在6~18之间，只能包含字母、数字和下划线',
+      pattern: /^\w{6,18}$/,
+      message: '长度在6~18之间，只能包含字母、数字和下划线',
       trigger: 'blur'
     }
   ]
 }
 
 // 记住密码
-const isKeepPassword = ref(false)
+const isKeepPassword =
+  ref<boolean>(localCache.getCache('isKeepPassword', false)) ??
+  ref<boolean>(false)
+const rememberPassword = () => {
+  localCache.removeCache('isKeepPassword', false)
+  localCache.setCache('isKeepPassword', isKeepPassword.value, false)
+}
+
+// 每次载入判断是否记住密码
+if (isKeepPassword.value) {
+  account.password = localCache.getCache('password') ?? ''
+}
 
 // 登录
+const loginStore = useLoginStore()
+const formRef = ref<InstanceType<typeof ElForm>>()
 const handleLogin = () => {
   // 表单校验
   formRef.value?.validate((isOK) => {
     if (isOK) {
-      console.log(formRef.value)
+      const name = account.name
+      const password = account.password
+      // 判断是否记住密码
+      if (isKeepPassword.value) {
+        localCache.removeCache('name')
+        localCache.removeCache('password')
+
+        localCache.setCache('name', name)
+        localCache.setCache('password', password)
+      }
+      // 登录验证
+      loginStore.accountLoginAction({ name, password })
     }
   })
 }
