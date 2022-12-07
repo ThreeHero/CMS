@@ -9,7 +9,7 @@
           <nav-header @changeFold="handleChangeFold" />
         </el-header>
         <el-main>
-          <router-view />
+          <div style="background-color: #fff"><router-view /></div>
         </el-main>
       </el-container>
     </el-container>

@@ -11,9 +11,9 @@
       active-text-color="#fff"
       background-color="#001529"
       :collapse="isFolded"
+      router
     >
       <template v-for="menu in userMenus" :key="menu.id">
-        <!-- 1.系统总览 -->
         <el-sub-menu :index="menu.url">
           <template #title>
             <el-icon>

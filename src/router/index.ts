@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { mapMenusToRoutes } from '@/utils/mapMenus'
+
 import localCache from '@/utils/cache'
 
 const routes: RouteRecordRaw[] = [
@@ -8,15 +10,18 @@ const routes: RouteRecordRaw[] = [
     redirect: '/main'
   },
   {
-    path: '/main',
-    component: () => import('@/layout/index.vue')
-  },
-  {
     path: '/login',
+    name: 'login',
     component: () => import('@/views/login/index.vue')
   },
   {
+    path: '/main',
+    name: 'main',
+    component: () => import('@/layout/index.vue')
+  },
+  {
     path: '/404',
+    name: '404',
     component: () => import('@/views/NotFound.vue')
   },
   {
@@ -29,6 +34,14 @@ const router = createRouter({
   routes,
   history: createWebHashHistory()
 })
+
+export function addRoutesWithMenu(menus: any) {
+  const dynamicRoutes = mapMenusToRoutes(menus)
+  for (const route of dynamicRoutes) {
+    // 向main 子项添加路由
+    router.addRoute('main', route)
+  }
+}
 
 // 前置路由守卫
 router.beforeEach((to) => {

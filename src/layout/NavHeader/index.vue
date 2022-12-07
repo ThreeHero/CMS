@@ -5,12 +5,18 @@
         <component :is="isFold ? 'Expand' : 'Fold'" />
       </el-icon>
     </div>
+    <div class="content">
+      <header-breadcrumb />
+      <header-info />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup name="NavHeader">
 import { ref, defineEmits } from 'vue'
 import localCache from '@/utils/cache'
+import HeaderInfo from './components/HeaderInfo.vue'
+import HeaderBreadcrumb from './components/HeaderBreadcrumb.vue'
 
 const emit = defineEmits(['changeFold'])
 
@@ -30,6 +36,7 @@ const handleFoldClick = () => {
   align-items: center;
   flex: 1;
   height: 100%;
+  user-select: none;
 
   .menu-icon {
     display: flex;
